@@ -1,9 +1,403 @@
-@import 'tailwindcss';
 
-@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
-@source '../../storage/framework/views/*.php';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-@theme {
-    --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-        'Segoe UI Symbol', 'Noto Color Emoji';
+/* =====================================================
+   LITERA COMMERCE
+   APPLE CLEAN GLASS - MEDIUM
+   Global Design System
+===================================================== */
+
+:root {
+    /* ================================================
+       BRAND IDENTITY
+    ================================================ */
+
+    --lc-navy: #1F2937;
+    --lc-orange: #EA5924;
+
+    /* ================================================
+       PRIMARY COLORS
+    ================================================ */
+
+    --lc-primary: #1F2937;
+    --lc-primary-dark: #111827;
+    --lc-primary-soft: #DCE8F5;
+
+    /* ================================================
+       GLOBAL BACKGROUND
+       Navy -> Blue -> Light Blue
+    ================================================ */
+
+    --lc-bg-start: #1F2937;
+    --lc-bg-middle: #304F78;
+    --lc-bg-end: #A9C9EC;
+
+    /* ================================================
+       TEXT COLORS
+    ================================================ */
+
+    --lc-text-primary: #1F2937;
+    --lc-text-secondary: #64748B;
+    --lc-text-light: #F8FAFC;
+
+    /* ================================================
+       GLASS SURFACES
+    ================================================ */
+
+    --lc-glass-bg: rgba(255, 255, 255, 0.58);
+    --lc-glass-strong: rgba(255, 255, 255, 0.78);
+    --lc-glass-light: rgba(255, 255, 255, 0.88);
+
+    --lc-glass-border: rgba(255, 255, 255, 0.75);
+    --lc-glass-border-soft: rgba(255, 255, 255, 0.40);
+
+    /* ================================================
+       GLASS EFFECTS
+    ================================================ */
+
+    --lc-glass-blur: 20px;
+
+    --lc-shadow:
+        0 8px 32px rgba(15, 23, 42, 0.16);
+
+    --lc-shadow-soft:
+        0 4px 20px rgba(15, 23, 42, 0.08);
+
+    --lc-shadow-hover:
+        0 12px 36px rgba(15, 23, 42, 0.18);
+
+    /* ================================================
+       BORDER RADIUS
+    ================================================ */
+
+    --lc-radius-sm: 10px;
+    --lc-radius-md: 14px;
+    --lc-radius: 20px;
+    --lc-radius-lg: 24px;
+
+    /* ================================================
+       TRANSITIONS
+    ================================================ */
+
+    --lc-transition: 200ms ease;
+}
+
+/* =====================================================
+   GLOBAL COMPONENTS
+===================================================== */
+
+@layer components {
+
+    /* ================================================
+       1. PAGE BACKGROUND
+    ================================================ */
+
+    .lc-page {
+        min-height: 100vh;
+
+        background: linear-gradient(
+            135deg,
+            var(--lc-bg-start) 0%,
+            var(--lc-bg-middle) 50%,
+            var(--lc-bg-end) 100%
+        );
+
+        color: var(--lc-text-primary);
+    }
+
+    /* Optional background with soft light accents */
+
+    .lc-page-glow {
+        position: relative;
+        isolation: isolate;
+        overflow: hidden;
+    }
+
+    .lc-page-glow::before {
+        content: "";
+        position: absolute;
+        width: 420px;
+        height: 420px;
+        top: -180px;
+        right: -100px;
+
+        background: rgba(255, 255, 255, 0.10);
+        filter: blur(90px);
+        border-radius: 50%;
+
+        pointer-events: none;
+        z-index: -1;
+    }
+
+    /* ================================================
+       2. GLASS PANEL
+    ================================================ */
+
+    .lc-glass {
+        background: var(--lc-glass-bg);
+
+        backdrop-filter: blur(var(--lc-glass-blur));
+        -webkit-backdrop-filter: blur(var(--lc-glass-blur));
+
+        border: 1px solid var(--lc-glass-border);
+
+        box-shadow: var(--lc-shadow);
+
+        border-radius: var(--lc-radius);
+    }
+
+    .lc-glass-strong {
+        background: var(--lc-glass-strong);
+
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+
+        border: 1px solid var(--lc-glass-border);
+
+        box-shadow: var(--lc-shadow);
+
+        border-radius: var(--lc-radius);
+    }
+
+    .lc-glass-light {
+        background: var(--lc-glass-light);
+
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+
+        border: 1px solid var(--lc-glass-border);
+
+        box-shadow: var(--lc-shadow-soft);
+
+        border-radius: var(--lc-radius);
+    }
+
+    /* ================================================
+       3. NAVBAR
+       White Glass Navigation
+    ================================================ */
+
+    .lc-glass-nav {
+        background: rgba(255, 255, 255, 0.88);
+
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+
+        border-bottom: 1px solid rgba(255, 255, 255, 0.9);
+
+        box-shadow:
+            0 4px 24px rgba(15, 23, 42, 0.10);
+    }
+
+    /* ================================================
+       4. GLASS CARD
+    ================================================ */
+
+    .lc-glass-card {
+        background: rgba(255, 255, 255, 0.58);
+
+        backdrop-filter: blur(20px);
+        -webkit-backdrop-filter: blur(20px);
+
+        border: 1px solid rgba(255, 255, 255, 0.80);
+
+        border-radius: var(--lc-radius);
+
+        box-shadow: var(--lc-shadow-soft);
+
+        transition:
+            transform var(--lc-transition),
+            box-shadow var(--lc-transition);
+    }
+
+    .lc-glass-card:hover {
+        box-shadow: var(--lc-shadow-hover);
+    }
+
+    /* ================================================
+       5. GLASS INPUT
+    ================================================ */
+
+    .lc-glass-input {
+        width: 100%;
+
+        background: rgba(255, 255, 255, 0.72);
+
+        border: 1px solid rgba(148, 163, 184, 0.25);
+
+        border-radius: var(--lc-radius-sm);
+
+        color: var(--lc-text-primary);
+
+        transition:
+            border-color var(--lc-transition),
+            box-shadow var(--lc-transition);
+    }
+
+    .lc-glass-input::placeholder {
+        color: #94A3B8;
+    }
+
+    .lc-glass-input:focus {
+        outline: none;
+
+        border-color: var(--lc-primary);
+
+        box-shadow:
+            0 0 0 3px rgba(59, 130, 246, 0.12);
+    }
+
+    /* ================================================
+       6. PRIMARY BUTTON
+    ================================================ */
+
+    .lc-primary-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+
+        background: var(--lc-primary);
+
+        color: #FFFFFF;
+
+        border: 1px solid rgba(255, 255, 255, 0.12);
+
+        border-radius: 12px;
+
+        transition:
+            background var(--lc-transition),
+            transform var(--lc-transition),
+            box-shadow var(--lc-transition);
+    }
+
+    .lc-primary-button:hover {
+        background: var(--lc-primary-dark);
+
+        box-shadow:
+            0 4px 14px rgba(31, 41, 55, 0.20);
+    }
+
+    .lc-primary-button:active {
+        transform: scale(0.98);
+    }
+
+    /* ================================================
+       7. ORANGE ACCENT
+    ================================================ */
+
+    .lc-accent {
+        color: var(--lc-orange);
+    }
+
+    .lc-accent-bg {
+        background: var(--lc-orange);
+        color: #FFFFFF;
+    }
+
+    .lc-accent-border {
+        border-color: var(--lc-orange);
+    }
+
+    /* ================================================
+       8. SECONDARY BUTTON
+    ================================================ */
+
+    .lc-secondary-button {
+        background: rgba(255, 255, 255, 0.70);
+
+        color: var(--lc-primary);
+
+        border: 1px solid rgba(255, 255, 255, 0.85);
+
+        border-radius: 12px;
+
+        transition:
+            background var(--lc-transition),
+            box-shadow var(--lc-transition);
+    }
+
+    .lc-secondary-button:hover {
+        background: rgba(255, 255, 255, 0.95);
+
+        box-shadow: var(--lc-shadow-soft);
+    }
+
+    /* ================================================
+       9. GLASS BADGE
+    ================================================ */
+
+    .lc-glass-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+
+        background: rgba(255, 255, 255, 0.65);
+
+        border: 1px solid rgba(255, 255, 255, 0.8);
+
+        border-radius: 999px;
+
+        padding: 5px 12px;
+
+        color: var(--lc-text-primary);
+
+        font-size: 0.75rem;
+        font-weight: 500;
+    }
+
+    /* ================================================
+       10. GLASS DIVIDER
+    ================================================ */
+
+    .lc-glass-divider {
+        border-color: rgba(255, 255, 255, 0.45);
+    }
+
+}
+
+/* =====================================================
+   ACCESSIBILITY
+===================================================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+
+}
+
+/* =====================================================
+   FALLBACK FOR BROWSERS WITHOUT BACKDROP FILTER
+===================================================== */
+
+@supports not (
+    (backdrop-filter: blur(20px)) or
+    (-webkit-backdrop-filter: blur(20px))
+) {
+
+    .lc-glass {
+        background: rgba(255, 255, 255, 0.90);
+    }
+
+    .lc-glass-strong {
+        background: rgba(255, 255, 255, 0.96);
+    }
+
+    .lc-glass-card {
+        background: rgba(255, 255, 255, 0.94);
+    }
+
+    .lc-glass-nav {
+        background: #FFFFFF;
+    }
+
 }
