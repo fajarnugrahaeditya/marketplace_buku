@@ -9,9 +9,14 @@
 
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            Edit Profil Penulis
-        </h2>
+        <div>
+            <h2 class="text-2xl font-bold text-white leading-tight">
+                Edit Profil Penulis
+            </h2>
+            <p class="mt-1 text-sm text-white/70">
+                Atur nama pena, bio, dan foto yang tampil di halaman penulis.
+            </p>
+        </div>
     </x-slot>
 
     <div class="py-12">

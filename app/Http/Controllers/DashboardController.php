@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Book;
 use App\Models\Library;
+use App\Models\Report;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -95,6 +96,7 @@ class DashboardController extends Controller
             'roles' => $roles,
             'bookStatus' => $bookStatus,
             'totalBooks' => (int) $bookStatus->sum(),
+            'openReports' => Report::where('status', 'open')->count(),
         ]);
     }
 }

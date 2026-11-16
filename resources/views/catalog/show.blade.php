@@ -169,11 +169,42 @@
                                 @endif
                             @endguest
                         @else
-                            <button type="button"
-                                disabled
-                                class="{{ $btn }} bg-gray-300 text-gray-500 cursor-not-allowed opacity-80">
-                                Beli buku (segera hadir)
-                            </button>
+                            @guest
+                                <a href="{{ route('login') }}"
+                                    class="{{ $btn }} lc-primary-button">
+                                    Masuk untuk membeli buku
+                                </a>
+                            @else
+                                @if ($isAdmin)
+                                    <p class="text-sm text-gray-500">
+                                        Akun admin tidak dapat membeli buku.
+                                    </p>
+                                @elseif ($isOwnBook)
+                                    <p class="text-sm text-gray-500">
+                                        Ini buku Anda.
+                                    </p>
+                                @elseif ($owned)
+                                    <a href="{{ route('library.index') }}"
+                                        class="{{ $btn }} bg-green-100 text-green-700 hover:bg-green-200">
+                                        Sudah ada di Pustaka Saya
+                                    </a>
+                                @elseif ($inCart)
+                                    <a href="{{ route('cart.index') }}"
+                                        class="{{ $btn }} bg-yellow-100 text-yellow-800 hover:bg-yellow-200">
+                                        Sudah di keranjang &mdash; lihat keranjang
+                                    </a>
+                                @else
+                                    <form method="POST"
+                                        action="{{ route('cart.store', ['book' => $book->slug]) }}">
+                                        @csrf
+
+                                        <button type="submit"
+                                            class="{{ $btn }} lc-primary-button">
+                                            Tambah ke keranjang
+                                        </button>
+                                    </form>
+                                @endif
+                            @endguest
                         @endif
 
                         {{-- Pratinjau PDF --}}

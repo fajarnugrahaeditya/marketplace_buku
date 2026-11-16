@@ -6,9 +6,12 @@
 <x-app-layout>
     <x-slot name="header">
         <div>
-            <h2 class="text-xl font-semibold leading-tight text-gray-900">
+            <h2 class="text-2xl font-bold text-white leading-tight">
                 Daftar sebagai Penulis
             </h2>
+            <p class="mt-1 text-sm text-white/70">
+                Lengkapi data singkat untuk mulai menerbitkan buku.
+            </p>
         </div>
     </x-slot>
 

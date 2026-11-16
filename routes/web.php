@@ -10,6 +10,12 @@ use App\Http\Controllers\CatalogController;
 use App\Http\Controllers\LibraryController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\Author\ProfileController as AuthorProfileController;
+use App\Http\Controllers\Admin\BookReviewController;
+use App\Http\Controllers\Admin\ReportController as AdminReportController;
+use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\PaymentController;
 
 // Setelah login, arahkan sesuai role
 Route::get('/dashboard', function (Request $request) {
@@ -49,6 +55,19 @@ Route::middleware(['auth', 'role:author'])->prefix('penulis')->name('author.')->
 
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [DashboardController::class, 'admin'])->name('dashboard');
+
+    // Tinjau buku: setujui, tolak, takedown, pulihkan
+    Route::get('buku', [BookReviewController::class, 'index'])->name('books.index');
+    Route::get('buku/{book}', [BookReviewController::class, 'show'])->name('books.show');
+    Route::get('buku/{book}/berkas/{type}', [BookReviewController::class, 'file'])->name('books.file');
+    Route::post('buku/{book}/setujui', [BookReviewController::class, 'approve'])->name('books.approve');
+    Route::post('buku/{book}/tolak', [BookReviewController::class, 'reject'])->name('books.reject');
+    Route::post('buku/{book}/takedown', [BookReviewController::class, 'takedown'])->name('books.takedown');
+    Route::post('buku/{book}/pulihkan', [BookReviewController::class, 'restore'])->name('books.restore');
+
+    // Laporan pembaca
+    Route::get('laporan', [AdminReportController::class, 'index'])->name('reports.index');
+    Route::patch('laporan/{report}', [AdminReportController::class, 'update'])->name('reports.update');
 });
 // Publik: katalog, detail buku, profil penulis
 Route::get('/', [CatalogController::class, 'index'])->name('catalog.index');
@@ -67,5 +86,21 @@ Route::middleware(['auth', 'role:reader,author'])->group(function () {
     Route::get('/pustaka/{book}/unduh', [LibraryController::class, 'download'])->name('library.download');
     Route::post('/profil-penulis/{authorProfile}/ikuti', [AuthorPageController::class, 'follow'])->name('authors.follow');
     Route::delete('/profil-penulis/{authorProfile}/ikuti', [AuthorPageController::class, 'unfollow'])->name('authors.unfollow');
+
+    // Keranjang, checkout, dan pesanan
+    Route::get('/keranjang', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/keranjang/{book:slug}', [CartController::class, 'store'])->name('cart.store');
+    Route::delete('/keranjang/{book:slug}', [CartController::class, 'destroy'])->name('cart.destroy');
+
+    Route::get('/checkout', [CheckoutController::class, 'show'])->name('checkout.show');
+    Route::post('/checkout', [CheckoutController::class, 'store'])->name('checkout.store');
+
+    Route::get('/pesanan', [OrderController::class, 'index'])->name('orders.index');
+    Route::get('/pesanan/{order:order_number}', [OrderController::class, 'show'])->name('orders.show');
+    Route::post('/pesanan/{order:order_number}/batal', [OrderController::class, 'cancel'])->name('orders.cancel');
+
+    // Pembayaran Midtrans
+    Route::post('/pesanan/{order:order_number}/bayar', [PaymentController::class, 'snap'])->name('orders.pay');
+    Route::post('/pesanan/{order:order_number}/cek-status', [PaymentController::class, 'check'])->name('orders.check');
 });
 require __DIR__.'/auth.php';

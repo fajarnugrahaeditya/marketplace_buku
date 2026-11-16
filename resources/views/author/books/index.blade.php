@@ -3,10 +3,10 @@
     <x-slot name="header">
         <div class="flex flex-wrap items-center justify-between gap-4">
             <div>
-                <h2 class="text-xl font-bold leading-tight text-gray-900">
+                <h2 class="text-2xl font-bold text-white leading-tight">
                     Buku Saya
                 </h2>
-                <p class="mt-1 text-sm text-gray-600">
+                <p class="mt-1 text-sm text-white/70">
                     Kelola dan pantau status publikasi buku Anda.
                 </p>
             </div>

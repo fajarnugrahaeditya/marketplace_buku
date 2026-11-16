@@ -6,6 +6,10 @@
         'admin' => 'admin.dashboard',
         default => null,
     };
+
+    $cartCount = in_array($role, ['reader', 'author'], true)
+        ? \App\Models\CartItem::whereHas('cart', fn ($c) => $c->where('user_id', auth()->id()))->count()
+        : 0;
 @endphp
 
 <nav x-data="{ open: false }" class="lc-glass-nav relative z-50">
@@ -21,7 +25,7 @@
                 </div>
 
                 <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <div class="hidden sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('catalog.index')" :active="request()->routeIs('catalog.*', 'authors.*')">
                         {{ __('Katalog') }}
                     </x-nav-link>
@@ -29,6 +33,24 @@
                     @if (in_array($role, ['reader', 'author'], true))
                         <x-nav-link :href="route('library.index')" :active="request()->routeIs('library.*')">
                             {{ __('Pustaka Saya') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.*', 'checkout.*')">
+                            {{ __('Keranjang') }}@if ($cartCount > 0) ({{ $cartCount }})@endif
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.*')">
+                            {{ __('Pesanan') }}
+                        </x-nav-link>
+                    @endif
+
+                    @if ($role === 'admin')
+                        <x-nav-link :href="route('admin.books.index')" :active="request()->routeIs('admin.books.*')">
+                            {{ __('Tinjau Buku') }}
+                        </x-nav-link>
+
+                        <x-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">
+                            {{ __('Laporan') }}
                         </x-nav-link>
                     @endif
 
@@ -112,6 +134,24 @@
             @if (in_array($role, ['reader', 'author'], true))
                 <x-responsive-nav-link :href="route('library.index')" :active="request()->routeIs('library.*')">
                     {{ __('Pustaka Saya') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('cart.index')" :active="request()->routeIs('cart.*', 'checkout.*')">
+                    {{ __('Keranjang') }}@if ($cartCount > 0) ({{ $cartCount }})@endif
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('orders.index')" :active="request()->routeIs('orders.*')">
+                    {{ __('Pesanan') }}
+                </x-responsive-nav-link>
+            @endif
+
+            @if ($role === 'admin')
+                <x-responsive-nav-link :href="route('admin.books.index')" :active="request()->routeIs('admin.books.*')">
+                    {{ __('Tinjau Buku') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('admin.reports.index')" :active="request()->routeIs('admin.reports.*')">
+                    {{ __('Laporan') }}
                 </x-responsive-nav-link>
             @endif
 

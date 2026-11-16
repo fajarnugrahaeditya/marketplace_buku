@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\CartItem;
 use App\Models\Category;
 use App\Models\Library;
 use Illuminate\Http\Request;
@@ -101,7 +102,13 @@ class CatalogController extends Controller
             : false;
         $isOwnBook = $user && (int) $book->author_id === (int) $user->id;
 
-        return view('catalog.show', compact('book', 'owned', 'isOwnBook'));
+        $inCart = $user
+            ? CartItem::where('book_id', $book->id)
+                ->whereHas('cart', fn ($c) => $c->where('user_id', $user->id))
+                ->exists()
+            : false;
+
+        return view('catalog.show', compact('book', 'owned', 'isOwnBook', 'inCart'));
     }
 
     /** Pratinjau PDF: wajib login, dibuka langsung di browser. */

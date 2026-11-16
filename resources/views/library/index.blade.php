@@ -1,17 +1,19 @@
 
-<x-catalog-layout title="Pustaka Saya">
+<x-app-layout>
+    <x-slot name="header">
+        <div>
+            <h2 class="text-2xl font-bold text-white leading-tight">
+                Pustaka Saya
+            </h2>
+            <p class="mt-1 text-sm text-white/70">
+                Kumpulan buku yang telah Anda miliki.
+            </p>
+        </div>
+    </x-slot>
+
     <div class="py-10 sm:py-12">
         <div class="mx-auto max-w-7xl space-y-6 px-4 sm:px-6 lg:px-8">
 
-            {{-- Header --}}
-            <div>
-                <h1 class="text-2xl font-bold text-white">
-                    Pustaka Saya
-                </h1>
-                <p class="mt-1 text-sm text-white">
-                    Kumpulan buku yang telah Anda miliki.
-                </p>
-            </div>
 
             {{-- Notifications --}}
             @if (session('status'))
@@ -104,4 +106,4 @@
 
         </div>
     </div>
-</x-catalog-layout>
+</x-app-layout>

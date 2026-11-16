@@ -2,12 +2,12 @@
 <x-app-layout>
     <x-slot name="header">
         <div>
-            <p class="text-sm font-medium text-white/70">
-                Litera Commerce
-            </p>
-            <h2 class="mt-1 text-2xl font-bold text-white leading-tight">
+            <h2 class="text-2xl font-bold text-white leading-tight">
                 Dashboard Admin
             </h2>
+            <p class="mt-1 text-sm text-white/70">
+                Pantau pengguna, buku, dan hal yang perlu ditindaklanjuti.
+            </p>
         </div>
     </x-slot>
 
@@ -28,6 +28,32 @@
                     Pantau aktivitas pengguna dan koleksi buku di Litera Commerce.
                 </p>
             </div>
+
+            {{-- Perlu tindakan --}}
+            <section>
+                <div class="mb-4">
+                    <h3 class="text-lg font-bold text-white">
+                        Perlu tindakan
+                    </h3>
+                    <p class="mt-1 text-sm text-white/70">
+                        Buku yang menunggu tinjau dan laporan pembaca yang belum ditangani.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <x-stat-card
+                        label="Buku menunggu tinjau"
+                        :value="$bookStatus['pending'] ?? 0"
+                        :href="route('admin.books.index')"
+                    />
+
+                    <x-stat-card
+                        label="Laporan baru"
+                        :value="$openReports"
+                        :href="route('admin.reports.index')"
+                    />
+                </div>
+            </section>
 
             {{-- Statistik Pengguna --}}
             <section>

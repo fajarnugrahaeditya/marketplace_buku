@@ -15,6 +15,7 @@
     ================================================ */
 
     --lc-navy: #1F2937;
+    --lc-navy-rgb: 31 41 55;
     --lc-orange: #EA5924;
 
     /* ================================================
@@ -189,6 +190,130 @@
 
         box-shadow:
             0 4px 24px rgba(15, 23, 42, 0.10);
+    }
+
+    /* ================================================
+       3b. NAV LINK (menu aktif = garis gradien di bawah tulisan)
+       Warna garis = separuh pertama gradien latar web:
+       navy -> biru -> biru cerah (sampai sekitar 75% gradien latar)
+    ================================================ */
+
+    .lc-nav-link {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 1.25rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        line-height: 1.25rem;
+        color: #64748B;
+        transition: color 0.2s ease;
+    }
+
+    /* garis di batas bawah navbar, selebar teks (padding kiri-kanan dikecualikan) */
+    .lc-nav-link::after {
+        content: "";
+        position: absolute;
+        left: 1.25rem;
+        right: 1.25rem;
+        bottom: 0;
+        height: 9px;
+        border-radius: 3px 3px 0 0;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+
+        /* cadangan untuk browser lama yang belum mendukung color-mix */
+        background: linear-gradient(90deg, #1F2937 0%, #304F78 67%, #6C8CB2 100%);
+        background: linear-gradient(
+            90deg,
+            var(--lc-bg-start) 0%,
+            var(--lc-bg-middle) 67%,
+            color-mix(in srgb, var(--lc-bg-middle) 50%, var(--lc-bg-end)) 100%
+        );
+    }
+
+    .lc-nav-link:hover {
+        color: var(--lc-navy);
+    }
+
+    .lc-nav-link:hover::after {
+        opacity: 0.4;
+    }
+
+    .lc-nav-link:focus-visible {
+        outline: 2px solid #304F78;
+        outline-offset: -2px;
+    }
+
+    .lc-nav-link--active,
+    .lc-nav-link--active:hover {
+        color: var(--lc-navy);
+        font-weight: 600;
+    }
+
+    .lc-nav-link--active::after,
+    .lc-nav-link--active:hover::after {
+        opacity: 1;
+    }
+
+    /* menu di tampilan HP: garis gradien vertikal di sisi kiri */
+    .lc-nav-link-mobile {
+        position: relative;
+        display: block;
+        width: 100%;
+        padding: 0.5rem 1rem 0.5rem 1.25rem;
+        text-align: start;
+        font-size: 1rem;
+        font-weight: 500;
+        color: #475569;
+        transition:
+            color 0.2s ease,
+            background-color 0.2s ease;
+    }
+
+    .lc-nav-link-mobile::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        width: 4px;
+        opacity: 0;
+        transition: opacity 0.2s ease;
+
+        background: linear-gradient(180deg, #1F2937 0%, #304F78 67%, #6C8CB2 100%);
+        background: linear-gradient(
+            180deg,
+            var(--lc-bg-start) 0%,
+            var(--lc-bg-middle) 67%,
+            color-mix(in srgb, var(--lc-bg-middle) 50%, var(--lc-bg-end)) 100%
+        );
+    }
+
+    .lc-nav-link-mobile:hover {
+        color: var(--lc-navy);
+        background-color: rgb(var(--lc-navy-rgb) / 0.05);
+    }
+
+    .lc-nav-link-mobile:hover::before {
+        opacity: 0.4;
+    }
+
+    .lc-nav-link-mobile:focus-visible {
+        outline: 2px solid #304F78;
+        outline-offset: -2px;
+    }
+
+    .lc-nav-link-mobile--active,
+    .lc-nav-link-mobile--active:hover {
+        color: var(--lc-navy);
+        font-weight: 600;
+        background-color: rgb(var(--lc-navy-rgb) / 0.06);
+    }
+
+    .lc-nav-link-mobile--active::before,
+    .lc-nav-link-mobile--active:hover::before {
+        opacity: 1;
     }
 
     /* ================================================

@@ -2,12 +2,12 @@
 <x-app-layout>
     <x-slot name="header">
         <div>
-            <p class="text-sm font-medium text-white/70">
-                Litera Commerce
-            </p>
-            <h2 class="mt-1 text-2xl font-bold text-white leading-tight">
+            <h2 class="text-2xl font-bold text-white leading-tight">
                 Dashboard Reader
             </h2>
+            <p class="mt-1 text-sm text-white/70">
+                Pantau koleksi buku dan karya terbaru dari penulis yang Anda ikuti.
+            </p>
         </div>
     </x-slot>
 

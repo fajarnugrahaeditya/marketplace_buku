@@ -52,6 +52,33 @@ class Book extends Model
         return $this->price === 0;
     }
 
+    /**
+     * Alasan buku ini tidak bisa dimasukkan ke keranjang atau dipesan oleh pengguna tertentu.
+     * Mengembalikan null kalau boleh dibeli.
+     */
+    public function purchaseBlockReason(User $user): ?string
+    {
+        if ($this->status !== 'published') {
+            return 'Buku ini sedang tidak tersedia.';
+        }
+
+        if ($this->isFree()) {
+            return 'Buku gratis tidak perlu dibeli, ambil langsung dari halaman buku.';
+        }
+
+        // AB-07: penulis tidak bisa membeli bukunya sendiri
+        if ((int) $this->author_id === (int) $user->id) {
+            return 'Anda tidak bisa membeli buku milik sendiri.';
+        }
+
+        // AB-06: buku yang sama tidak bisa dimiliki dua kali
+        if (Library::where('user_id', $user->id)->where('book_id', $this->id)->exists()) {
+            return 'Buku ini sudah ada di Pustaka Saya.';
+        }
+
+        return null;
+    }
+
     public function statusLabel(): string
     {
         return match ($this->status) {
