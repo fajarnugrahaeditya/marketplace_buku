@@ -45,7 +45,7 @@ Berbeda dari toko online biasa (satu penjual), di sini banyak penulis menjual bu
   </tr>
   <tr>
     <td width="50%"><img src="public/screenshots//pembayaran-midtrans.png" alt="Pembayaran Midtrans"><br><sub><b>Pembayaran Midtrans (sandbox)</b></sub></td>
-    <td width="50%"><img src="public/screenshots//kelolabuku_author.png" alt="kelola buki oleh penulis(penjual)"><br><sub><b>Tinjau buku oleh admin</b></sub></td>
+    <td width="50%"><img src="public/screenshots//kelolabuku_author.png" alt="kelola buki oleh penulis(penjual)"><br><sub><b>Kelola buku oleh penulis(penjual)</b></sub></td>
   </tr>
 </table>
 
